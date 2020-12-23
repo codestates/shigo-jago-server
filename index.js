@@ -1,44 +1,34 @@
-//express
+const express = require("express")
+const cors = require("cors")
+const morgan = require("morgan")
+const searchRouter = require("./routes/search")
+const userRouter = require("./routes/user")
+const mypageRouter = require("./routes/mypage")
+const detailRouter = require("./routes/detail")
+const cookieParser = require('cookie-parser');
+
 const app = express();
 const port = 4000
 
-//middle-ware
-const cors = require("cors");
-const express = require("express");
-const morgan = require("morgan");
-const cookieParser = require("cookie-parser")
-// const session = require("express-session")
-
-//cors
 app.use(
     cors({
         origin: ["http://localhost:3000"],
-        method: ["GET, POST, PUT, OPTION"],
+        method: ["GET, POST, OPTION"],
         credentials: true,
     })
-);
+)
 
-//express.json()
-app.use(express.json());
-
-
-//morgan
-app.use(morgan("dev"));
-
-//인증방식 토큰? oAuth에서 토큰을 사용하기 때문
+app.use(express.json())
 app.use(cookieParser())
+app.use(morgan("dev"))
 
-//routing
-const searchRouter = require("./routes/search");
-const userRouter = require("./routes/user");
-const mypageRouter = require("./routes/mypage");
-
-app.use("/search", searchRouter);
-app.use("/user", userRouter);
-app.use("/mypage", mypageRouter);
+app.use("/search", searchRouter)
+app.use("/user", userRouter)
+app.use("/mypage", mypageRouter)
+app.use("/detail", detailRouter)
 
 app.listen(port, () => {
     console.log(`server listening on ${port} port`)
 })
 
-module.exports = app;
+module.exports = app

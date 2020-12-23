@@ -2,29 +2,26 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../../models")
 require("dotenv").config();
 
-module.exports = {
-    //리프레시는 쿠키에, 엑세스는 응답에
-    post: (req, res) => {
-        const { email, password } = req.body
-        User.findOne({
-            where: {
-                email,
-                password
-            },
-        })
-            .then(data => {
-                if (!data) {
-                    return res.json({ data: null, message: 'not authorized' });
-                }
-                //data 전체를 받는건지 email만 받는건지 확인하기
-                const accessToken = jwt.sign(data.email, process.env.ACCESS_SECRET);
-                const refreshToken = jwt.sign(data.data.email, process.env.REFRESH_SECRET);
-                res.cookie("refreshToken", refreshToken, { httpOnly: true })
-                res.json({ data: { accessToken }, message: "ok" });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+module.exports = async (req, res) => {
 
-    }
+  const { email, password } = req.body
+  const userInfo = await User.findOne({
+    where: { email: email, password: password }
+  })
+  if (!userInfo) res.status(404).json({"error": "Invalid user or Wrong password"})
+ 
+  else {
+    let obj = userInfo.dataValues
+    delete obj.password
+    console.log(userInfo.dataValues.id)
+    const accessToken = jwt.sign(userInfo.dataValues, process.env.ACCESS_SECRET,{ expiresIn: '2h' })
+    const refreshToken = jwt.sign(userInfo.dataValues, process.env.REFRESH_SECRET, { expiresIn: '12h' })
+
+    res.cookie('refreshToken', refreshToken, { httpOnly: true , sameSite: 'none'})
+    res.status(201).json({ 
+      "data": { 
+        "accessToken": accessToken 
+      }, 
+      "message": "ok" })
+    } 
 }

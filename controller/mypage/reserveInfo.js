@@ -12,7 +12,7 @@ module.exports = {
             })
         }
         else {
-            
+
             const token = authorization.split('Bearer ')[1]
             const data = jwt.verify(token, process.env.ACCESS_SECRET)
 
@@ -20,7 +20,7 @@ module.exports = {
                 where: { userId: data.id },
             })
             if(!reserveInfo) {
-                res.status(401).json({
+                res.status(404).json({
                     error: "not found"
                 })
             }

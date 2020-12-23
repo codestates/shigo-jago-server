@@ -6,6 +6,7 @@ const port = 4000
 const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser")
 // const session = require("express-session")
 
 //cors
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 //인증방식 토큰? oAuth에서 토큰을 사용하기 때문
+app.use(cookieParser())
 
 //routing
 const searchRouter = require("./routes/search");
@@ -34,8 +36,6 @@ const mypageRouter = require("./routes/mypage");
 app.use("/search", searchRouter);
 app.use("/user", userRouter);
 app.use("/mypage", mypageRouter);
-
-
 
 app.listen(port, () => {
     console.log(`server listening on ${port} port`)

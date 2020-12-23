@@ -1,0 +1,36 @@
+{
+  "name": "shigo-jago-server",
+  "version": "1.0.0",
+  "description": "shigo-jago-server",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "\"\""
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.16.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.6",
+    "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unow30/shigo-jago-server.git"
+  },
+  "keywords": [
+    "[]"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unow30/shigo-jago-server/issues"
+  },
+  "homepage": "https://github.com/unow30/shigo-jago-server#readme"
+}

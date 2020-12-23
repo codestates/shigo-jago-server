@@ -11,3 +11,5 @@ router.get("/reserveinfo", mypageController.reserveinfo.get);
 router.get("/userinfo", mypageController.userinfo.get);
 
 router.post("/writereview", mypageController.writereview.post);
+
+router.post("/deleteuser", mypageController.deleteuser.post)

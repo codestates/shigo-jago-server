@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
     const { email, name, password, mobile } = req.body;
 
     if (!email || !password || !name || !mobile) {
-        res.status(422).send({ "error": "insufficient parameters supplied" })
+        return res.status(422).send({ "error": "insufficient parameters supplied" })
     }
     const [userInfo, created] = await User.findOrCreate({
         where: {

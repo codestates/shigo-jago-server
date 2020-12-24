@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       checkedin: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       checkedout: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       adult: {
         type: Sequelize.INTEGER

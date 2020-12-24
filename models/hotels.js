@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Hotel.hasMany(models.Reservation, {
+      Hotel.hasMany(models.Review, {
         foreignKey: 'hotelId',
         onDelete: 'CASCADE',
       }),
-      Hotel.hasMany(models.Review, {
+      Hotel.hasMany(models.Reservation, {
         foreignKey: 'hotelId',
         onDelete: 'CASCADE',
       })

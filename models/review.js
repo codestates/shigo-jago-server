@@ -15,11 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         foreignKey: {
           allowNull: true,
-        },
-      })
-      Review.hasMany(models.Hotel, {
-        foreignKey: 'hotelId',
+        }
+      }),
+      Review.belongsTo(models.Hotel, {
         onDelete: 'CASCADE',
+        foreignKey: {
+          allowNull: true,
+        }
       })
     }
   };

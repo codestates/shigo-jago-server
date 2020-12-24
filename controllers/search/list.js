@@ -1,5 +1,3 @@
-module.exports = {
-    post: (req, res) => {
-
-    }
+module.exports = async (req, res) => {
+    
 }

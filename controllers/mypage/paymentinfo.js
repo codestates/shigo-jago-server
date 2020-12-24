@@ -1,3 +1,3 @@
-module.exports = {
-    get: (req, res) => { }
+module.exports = async (req, res) => {
+    
 }

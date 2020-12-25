@@ -14,6 +14,12 @@ module.exports = {
       howPaid: {
         type: Sequelize.STRING
       },
+      cardNumber: {
+        type: Sequelize.STRING
+      },
+      accountNumber: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -3,9 +3,9 @@ const axios = require('axios')
 
 module.exports = async (req, res) => {
      
-    const { areaCode, sigunguCode } = req.body
+    const { areacode, sigungucode } = req.body
     
-    const url = `http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchStay?ServiceKey=${process.env.API_SECRET}&areaCode=${areaCode}&sigunguCode=${sigunguCode}&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1&_type=json`
+    const url = `http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchStay?ServiceKey=${process.env.API_SECRET}&areaCode=${areacode}&sigunguCode=${sigungucode}&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1&_type=json`
     
     const hotels = await axios.get(url)
 

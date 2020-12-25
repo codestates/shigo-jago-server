@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
 
   const authorization = req.headers.authorization
 
-  if(authorization === undefined) {
+  if (authorization === undefined) {
     res.status(401).json({
       error: 'not authorized'
     })
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
       where: { userId: data.id },
     })
 
-    if(!reserveInfo.length) {
+    if (!reserveInfo.length) {
       res.status(404).json({
         error: "not found"
       })
@@ -35,6 +35,7 @@ module.exports = async (req, res) => {
 
       arr.forEach(async obj => {
         let newObj = Object.assign({}, {
+          id: obj.dataValues.id,
           checkedin: obj.dataValues.checkedin,
           checkedout: obj.dataValues.checkedout,
           adult: obj.dataValues.adult,
@@ -43,14 +44,14 @@ module.exports = async (req, res) => {
           userId: obj.dataValues.userId,
           hotelName: obj.dataValues.Hotel.hotelname
         })
-       newArr.push(newObj)
+        newArr.push(newObj)
       })
 
-      res.status(201).json({ 
-        "data":  newArr,
-        "message": "ok" 
+      res.status(201).json({
+        "data": newArr,
+        "message": "ok"
       })
-      
+
     }
   }
 }

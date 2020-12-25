@@ -16,6 +16,9 @@ module.exports = async (req, res) => {
         const userInfo = await User.destroy({
             where: { id: data.id }
         })
+        res.clearCookie('refreshToken');
+        req.headers.authorization = null
+
         res.status(200).json({ "message": "OK Delete complete!" })
 
     }

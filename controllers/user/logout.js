@@ -6,8 +6,6 @@ module.exports = async (req, res) => {
             "error": "you're currently not logined"
         });
 
-    } else if (!req.cookies.refreshToken) {
-        res.status(400).json({ "error": "you're currently not logined" })
     } else {
         res.clearCookie('refreshToken');
         req.headers.authorization = null

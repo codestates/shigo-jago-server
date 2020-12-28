@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
 
   const authorization = req.headers.authorization
 
-  if(authorization === undefined) {
+  if (authorization === undefined) {
     res.status(401).json({
       error: 'not authorized'
     })
@@ -23,9 +23,9 @@ module.exports = async (req, res) => {
     delete obj.createdAt
     delete obj.updatedAt
 
-    res.status(201).json({ 
+    res.status(201).json({
       data: obj,
-      message: "ok" 
+      message: "ok"
     })
   }
 }

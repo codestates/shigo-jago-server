@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     const hotels = await axios.get(url)
 
     const hotelList = hotels.data.response.body.items.item
-
+    
     const data = []
     hotelList.forEach(obj => {
         let newObj = Object.assign({}, {

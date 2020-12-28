@@ -3,7 +3,15 @@ const jwt = require('jsonwebtoken')
 const { User } = require('../../models')
 
 module.exports = async (req, res) => {
-    const { name, mobile } = req.body
+    const body = req.body
+    body.createdAt = new Date()
+
+    Object.keys(body).map(el => {
+        if (!body.el) {
+            delete body.el
+        }
+    })
+
     const authorization = req.headers.authorization
 
     if (authorization === undefined) {
@@ -14,14 +22,9 @@ module.exports = async (req, res) => {
         const token = authorization.split('Bearer ')[1]
         const data = jwt.verify(token, process.env.ACCESS_SECRET)
 
-        const editInfo = await User.update({
-            name: name,
-            mobile: mobile,
-            updatedAt: new Date(),
-
-        }, {
+        const editInfo = await User.update(body, {
             where: {
-                email: data.email,
+                id: data.id,
             }
         })
 

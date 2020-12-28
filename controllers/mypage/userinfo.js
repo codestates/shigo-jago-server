@@ -18,7 +18,6 @@ module.exports = async (req, res) => {
     let userInfo = await User.findOne({
       where: { id: data.id },
     })
-    console.log(userInfo)
     let obj = userInfo.dataValues
     delete obj.password
     delete obj.createdAt

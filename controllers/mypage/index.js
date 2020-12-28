@@ -4,5 +4,5 @@ module.exports = {
     reserveinfo: require("./reserveinfo"),
     userinfo: require("./userinfo"),
     writereview: require("./writereview"),
-    useredit: require("./useredit")
+    useredit: require("./useredit"),
 }

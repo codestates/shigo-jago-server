@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
 
   const authorization = req.headers.authorization
 
-  if(authorization === undefined) {
+  if (authorization === undefined) {
     res.status(401).json({
       error: 'not authorized'
     })
@@ -18,14 +18,15 @@ module.exports = async (req, res) => {
     let userInfo = await User.findOne({
       where: { id: data.id },
     })
+    console.log(userInfo)
     let obj = userInfo.dataValues
     delete obj.password
     delete obj.createdAt
     delete obj.updatedAt
 
-    res.status(201).json({ 
+    res.status(201).json({
       data: obj,
-      message: "ok" 
+      message: "ok"
     })
   }
 }

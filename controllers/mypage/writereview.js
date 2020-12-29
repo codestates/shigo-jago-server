@@ -55,9 +55,3 @@ module.exports = async (req, res) => {
         }
     }
 }
-// const reviewInfo = await Review.create({
-//     title: title,
-//     description: description,
-//     userId: userId,
-//     hotelId: hotelId
-// });

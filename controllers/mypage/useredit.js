@@ -6,12 +6,6 @@ module.exports = async (req, res) => {
     const body = req.body
     body.createdAt = new Date()
 
-    Object.keys(body).map(el => {
-        if (!body.el) {
-            delete body.el
-        }
-    })
-
     const authorization = req.headers.authorization
 
     if (authorization === undefined) {

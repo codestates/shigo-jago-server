@@ -60,11 +60,11 @@ module.exports = async (req, res) => {
 
         newArr.push(newObj)
         console.log(newArr)
-      })
 
-      res.status(201).json({
-        "data": newArr,
-        "message": "ok"
+        res.status(201).json({
+          "data": newArr,
+          "message": "ok"
+        })
       })
 
     }

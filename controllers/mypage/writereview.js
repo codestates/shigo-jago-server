@@ -11,26 +11,53 @@ module.exports = async (req, res) => {
         })
     }
     else {
-        //reservationinfo 하나의 컴포넌트에서 가지고있던 예약정보의 id를 req.body에 담아서 보낸다면?
         const { title, description, reservationId } = req.body
 
         if (!title || !description) {
             return res.status(422).send({ "error": 'insufficient parameters supplied' });
         }
 
-        //예약정보 하나를 가져온다. userId와 hotelId를 입력하기 위해 쓰인다.
         const reserveInfo = await Reservation.findOne({
             where: { id: reservationId }
         })
         const { userId, hotelId } = reserveInfo;
 
-        const reviewInfo = await Review.create({
-            title: title,
-            description: description,
-            userId: userId,
-            hotelId: hotelId
-        });
-        res.status(200).send({ "message": "ok" })
+        const [reviewInfo, created] = await Review.findOrCreate({
+            where: {
+                userId: userId,
+                hotelId: hotelId
+            },
+            defaults: {
+                title: title,
+                description: description,
+                userId: userId,
+                hotelId: hotelId
+            }
+        })
+        if (created) {
+            res.status(201).send({
+                "message": "successfully write review!"
+            })
+        } else {
+            const editReviewInfo = await Review.update(
+                {
+                    title: title,
+                    description: description
+                },
+                {
+                    where: { id: reviewInfo.id }
+                }
+            )
+            res.status(201).send({
+                "message": "successfully update review!"
+            })
 
+        }
     }
 }
+// const reviewInfo = await Review.create({
+//     title: title,
+//     description: description,
+//     userId: userId,
+//     hotelId: hotelId
+// });

@@ -2,6 +2,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const { Reservation } = require('../../models')
 const { Hotel } = require('../../models')
+const { Review } = require('../../models')
 
 module.exports = async (req, res) => {
 
@@ -44,7 +45,21 @@ module.exports = async (req, res) => {
           userId: obj.dataValues.userId,
           hotelName: obj.dataValues.Hotel.hotelname
         })
+
+        const reviewInfo = await Review.findOne({
+          where: {
+            userId: data.id,
+            hotelId: obj.dataValues.Hotel.id
+          }
+        })
+        if (!reviewInfo) {
+          newObj.isReviewed = false;
+        } else {
+          newObj.isReviewed = true;
+        }
+
         newArr.push(newObj)
+        console.log(newArr)
       })
 
       res.status(201).json({

@@ -45,11 +45,10 @@ module.exports = async (req, res) => {
           userId: obj.dataValues.userId,
           hotelName: obj.dataValues.Hotel.hotelname
         })
-
-        const reviewInfo = await Review.findOne({
+        const reviewInfo = Review.findOne({
           where: {
-            userId: data.id,
-            hotelId: obj.dataValues.Hotel.id
+            userId: obj.dataValues.userId,
+            hotelId: obj.dataValues.hotelId
           }
         })
         if (!reviewInfo) {
@@ -60,11 +59,11 @@ module.exports = async (req, res) => {
 
         newArr.push(newObj)
         console.log(newArr)
+      })
 
-        res.status(201).json({
-          "data": newArr,
-          "message": "ok"
-        })
+      res.status(201).json({
+        "data": newArr,
+        "message": "ok"
       })
 
     }

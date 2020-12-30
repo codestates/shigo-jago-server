@@ -43,23 +43,34 @@ module.exports = async (req, res) => {
           child: obj.dataValues.child,
           createdAt: obj.dataValues.createdAt,
           userId: obj.dataValues.userId,
-          hotelName: obj.dataValues.Hotel.hotelname
+          hotelName: obj.dataValues.Hotel.hotelname,
+          hotelId: obj.dataValues.Hotel.id
         })
-        const reviewInfo = Review.findOne({
-          where: {
-            userId: obj.dataValues.userId,
-            hotelId: obj.dataValues.hotelId
-          }
-        })
-        if (!reviewInfo) {
-          newObj.isReviewed = false;
-        } else {
-          newObj.isReviewed = true;
-        }
 
         newArr.push(newObj)
         console.log(newArr)
       })
+
+      newArr.forEach(async obj => {
+        const reviewInfo = await Review.findAll({
+          where: {
+            userId: obj.userId,
+            hotelId: obj.hotelId
+          }
+        })
+        if (reviewInfo.length === 0) {
+          console.log("리뷰없음")
+          obj.isReviewed = false
+          console.log(obj)
+        } else {
+          console.log("리뷰있음")
+          obj.isReviewed = true
+          console.log(obj)
+
+        }
+      })
+
+      console.log(newArr)
 
       res.status(201).json({
         "data": newArr,

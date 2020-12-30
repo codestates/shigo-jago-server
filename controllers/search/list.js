@@ -24,7 +24,9 @@ module.exports = async (req, res) => {
             image2 : obj.firstimage2,
             readcount: obj.readcount,
             mobile: obj.tel,
-            title: obj.title
+            title: obj.title,
+            mapx: obj.mapx,
+            mapy: obj.mapy
         })
         data.push(newObj)
     })

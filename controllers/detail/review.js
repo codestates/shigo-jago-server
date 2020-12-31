@@ -12,15 +12,17 @@ module.exports = async (req, res) => {
     const title = hotel.data.response.body.items.item.title
 
     const hotelInfo = await Hotel.findOne({
-        where: { hotelname: title },
-      })
+      raw: true,
+      where: { hotelname: title },
+    })
 
     const review = await Review.findAll({
-        where: { hotelId: hotelInfo.dataValues.id}
+      raw: true,
+      where: { hotelId: hotelInfo.id}
     })
 
     res.status(201).json({ 
-        "data":  review.dataValues,
+        "data":  review,
         "message": "ok" 
       })
 

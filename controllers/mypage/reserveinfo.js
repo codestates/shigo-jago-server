@@ -18,6 +18,8 @@ module.exports = async (req, res) => {
     const data = jwt.verify(token, process.env.ACCESS_SECRET)
 
     const reserveInfo = await Reservation.findAll({
+      raw: true,
+      nest : true,
       include: [
         { model: Hotel, required: true }
       ],
@@ -31,25 +33,28 @@ module.exports = async (req, res) => {
     }
     else {
 
+      // reserveInfo = reserveInfo.map(el => el.get({ plain: true}))
+     
       let newArr = []
       let arr = reserveInfo
 
       arr.forEach(async (obj,idx) => {
         let newObj = Object.assign({}, {
-          id: obj.dataValues.id,
-          checkedin: obj.dataValues.checkedin,
-          checkedout: obj.dataValues.checkedout,
-          adult: obj.dataValues.adult,
-          child: obj.dataValues.child,
-          createdAt: obj.dataValues.createdAt,
-          userId: obj.dataValues.userId,
-          hotelName: obj.dataValues.Hotel.hotelname
+          id: obj.id,
+          checkedin: obj.checkedin,
+          checkedout: obj.checkedout,
+          adult: obj.adult,
+          child: obj.child,
+          createdAt: obj.createdAt,
+          userId: obj.userId,
+          hotelName: obj.Hotel.hotelname
         })
-        let data = await find(obj.dataValues.userId, obj.dataValues.Hotel.id)
+        let data = await find(obj.userId, obj.Hotel.id)
+
         data 
         ? (
           newObj.isReview = true,
-          newObj.review = data.dataValues
+          newObj.review = data
           )  
         : newObj.isReview = false
         newArr.push(newObj)
@@ -64,7 +69,8 @@ module.exports = async (req, res) => {
 }
 
 async function find (x, y) {
-  const reviewInfo = await Review.findOne({
+  const reviewInfo = await Review.findAll({
+    raw: true,
     where: {
       userId: x,
       hotelId: y

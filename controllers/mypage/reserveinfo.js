@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
         })
         let data = await find(obj.userId, obj.Hotel.id)
 
-        data 
+        data.length > 0 
         ? (
           newObj.isReview = true,
           newObj.review = data

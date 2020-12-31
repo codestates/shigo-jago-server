@@ -4,12 +4,15 @@ const axios = require('axios')
 module.exports = async (req, res) => {
      
     const { areacode, sigungucode } = req.body
-    
+    console.log('areacode', areacode, 'sigungucode', sigungucode)
+   
     const url = `http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchStay?ServiceKey=${process.env.API_SECRET}&areaCode=${areacode}&sigunguCode=${sigungucode}&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1&_type=json`
     
     const hotels = await axios.get(url)
 
+
     const hotelList = hotels.data.response.body.items.item
+    console.log(hotelList)
     
     const data = []
     hotelList.forEach(obj => {

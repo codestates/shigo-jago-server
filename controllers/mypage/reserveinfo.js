@@ -18,6 +18,8 @@ module.exports = async (req, res) => {
     const data = jwt.verify(token, process.env.ACCESS_SECRET)
 
     const reserveInfo = await Reservation.findAll({
+      raw: true,
+      nest : true,
       include: [
         { model: Hotel, required: true }
       ],
@@ -31,52 +33,48 @@ module.exports = async (req, res) => {
     }
     else {
 
+      // reserveInfo = reserveInfo.map(el => el.get({ plain: true}))
+     
       let newArr = []
       let arr = reserveInfo
 
-      arr.forEach(async obj => {
+      arr.forEach(async (obj,idx) => {
         let newObj = Object.assign({}, {
-          id: obj.dataValues.id,
-          checkedin: obj.dataValues.checkedin,
-          checkedout: obj.dataValues.checkedout,
-          adult: obj.dataValues.adult,
-          child: obj.dataValues.child,
-          createdAt: obj.dataValues.createdAt,
-          userId: obj.dataValues.userId,
-          hotelName: obj.dataValues.Hotel.hotelname,
-          hotelId: obj.dataValues.Hotel.id
+          id: obj.id,
+          checkedin: obj.checkedin,
+          checkedout: obj.checkedout,
+          adult: obj.adult,
+          child: obj.child,
+          createdAt: obj.createdAt,
+          userId: obj.userId,
+          hotelName: obj.Hotel.hotelname
         })
+        let data = await find(obj.userId, obj.Hotel.id)
 
+        data 
+        ? (
+          newObj.isReview = true,
+          newObj.review = data
+          )  
+        : newObj.isReview = false
         newArr.push(newObj)
-        console.log(newArr)
-      })
-
-      newArr.forEach(async obj => {
-        const reviewInfo = await Review.findAll({
-          where: {
-            userId: obj.userId,
-            hotelId: obj.hotelId
-          }
+        idx === arr.length-1 ? res.status(201).json({
+          "data": newArr,
+          "message": "ok"
         })
-        if (reviewInfo.length === 0) {
-          console.log("리뷰없음")
-          obj.isReviewed = false
-          console.log(obj)
-        } else {
-          console.log("리뷰있음")
-          obj.isReviewed = true
-          console.log(obj)
-
-        }
+        : null
       })
-
-      console.log(newArr)
-
-      res.status(201).json({
-        "data": newArr,
-        "message": "ok"
-      })
-
     }
   }
+}
+
+async function find (x, y) {
+  const reviewInfo = await Review.findAll({
+    raw: true,
+    where: {
+      userId: x,
+      hotelId: y
+    }
+  })
+  return reviewInfo
 }

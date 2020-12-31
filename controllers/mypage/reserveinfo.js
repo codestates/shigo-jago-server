@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
       let newArr = []
       let arr = reserveInfo
 
-      arr.forEach(async obj => {
+      arr.forEach(async (obj,idx) => {
         let newObj = Object.assign({}, {
           id: obj.dataValues.id,
           checkedin: obj.dataValues.checkedin,
@@ -45,27 +45,30 @@ module.exports = async (req, res) => {
           userId: obj.dataValues.userId,
           hotelName: obj.dataValues.Hotel.hotelname
         })
-        const reviewInfo = Review.findOne({
-          where: {
-            userId: obj.dataValues.userId,
-            hotelId: obj.dataValues.hotelId
-          }
-        })
-        if (!reviewInfo) {
-          newObj.isReviewed = false;
-        } else {
-          newObj.isReviewed = true;
-        }
-
+        let data = await find(obj.dataValues.userId, obj.dataValues.Hotel.id)
+        data 
+        ? (
+          newObj.isReview = true,
+          newObj.review = data.dataValues
+          )  
+        : newObj.isReview = false
         newArr.push(newObj)
-        console.log(newArr)
+        idx === arr.length-1 ? res.status(201).json({
+          "data": newArr,
+          "message": "ok"
+        })
+        : null
       })
-
-      res.status(201).json({
-        "data": newArr,
-        "message": "ok"
-      })
-
     }
   }
+}
+
+async function find (x, y) {
+  const reviewInfo = await Review.findOne({
+    where: {
+      userId: x,
+      hotelId: y
+    }
+  })
+  return reviewInfo
 }

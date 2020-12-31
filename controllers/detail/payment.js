@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
         res.status(401).json({
             error: 'not authorized'
         })
-    } 
+    }
     else {
         const token = authorization.split('Bearer ')[1]
         const data = jwt.verify(token, process.env.ACCESS_SECRET)
@@ -23,23 +23,23 @@ module.exports = async (req, res) => {
         const { checkedin, checkedout, adult, child, hotelName } = reserveInfo
         const { price, howPaid, cardNumber, accountNumber } = payInfo
 
-        const createRowHotel = await Hotel.create({
-            hotelname: hotelName
+        const hotelInfo = await Hotel.findOrCreate({
+            where: {
+                hotelname: hotelName
+            }, defaults: {
+                hotelname: hotelName
+            }
         })
-
-        const findReserveHotel = await Hotel.findOne({
-            where: { hotelname: hotelName }
-        })
-
+        console.log(hotelInfo)
         const reservationInfo = await Reservation.create({
             checkedin: checkedin,
             checkedout: checkedout,
             adult: adult,
             child: child,
             userId: data.id,
-            hotelId: findReserveHotel.dataValues.id
+            hotelId: hotelInfo[0].dataValues.id
         })
-        
+
         const paymentInfo = await Payment.create({
             price: price,
             howPaid: howPaid,
@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
             accountNumber: accountNumber,
             ReservationId: reservationInfo.dataValues.id
         })
-        
+
         if (!paymentInfo) {
             res.status(404).json({ "error": "not found" });
         } else {

@@ -11,8 +11,7 @@ module.exports = async (req, res) => {
     raw: true,
     where: { loginId: loginId }
   })
-  console.log(password)
-  console.log(SHA256(password + findUser.salt))
+
   const userInfo = await User.findOne({
     raw: true,
     where: { loginId: loginId, password: SHA256(password + findUser.salt)}

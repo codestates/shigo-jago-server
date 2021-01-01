@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   const authorization = req.headers.authorization
 
   if (authorization === undefined) {
-    res.status(401).json({
+    res.status(201).json({
       error: 'not authorized'
     })
   }

@@ -5,9 +5,40 @@ require("dotenv").config();
 
 module.exports = async (req, res) => {
 
-  const { socialEmail, socialAccount } = req.body
+  const { socialEmail, socialAccount, token } = req.body
 
-  if(socialEmail, socialAccount) {
+  if(token) {
+
+    const data = jwt.verify(token, process.env.ACCESS_SECRET)
+
+    await Social.create({
+      userId: data.id,
+      corporation: 'google',
+      socialEmail: socialEmail,
+      socialAccount: String(socialAccount)
+    })
+
+    const userInfo = await User.findOne({
+      raw: true,
+      where: {
+        id: data.id
+      }
+    })
+
+    const { password, salt, createdAt, updatedAt, mobile, ...userData } = userInfo
+
+    const accessToken = jwt.sign(userData, process.env.ACCESS_SECRET,{ expiresIn: '2h' })
+    const refreshToken = jwt.sign(userData, process.env.REFRESH_SECRET, { expiresIn: '12h' })
+
+    res.cookie('refreshToken', refreshToken, { httpOnly: true , sameSite: 'none'})
+    res.status(201).json({ 
+      "data": { 
+        "accessToken": accessToken 
+      }, 
+      "message": "ok" })
+  }
+
+  else if(socialEmail, socialAccount) {
 
     const socialInfo = await Social.findOne({
       where: {  
@@ -28,9 +59,10 @@ module.exports = async (req, res) => {
           id: socialInfo.userId
         }
       })
-      
-      const accessToken = jwt.sign(userInfo, process.env.ACCESS_SECRET,{ expiresIn: '2h' })
-      const refreshToken = jwt.sign(userInfo, process.env.REFRESH_SECRET, { expiresIn: '12h' })
+      const { password, salt, createdAt, updatedAt, mobile, ...userData } = userInfo
+
+      const accessToken = jwt.sign(userData, process.env.ACCESS_SECRET,{ expiresIn: '2h' })
+      const refreshToken = jwt.sign(userData, process.env.REFRESH_SECRET, { expiresIn: '12h' })
 
       res.cookie('refreshToken', refreshToken, { httpOnly: true , sameSite: 'none'})
       res.status(201).json({ 

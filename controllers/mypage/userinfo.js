@@ -16,28 +16,37 @@ module.exports = async (req, res) => {
     const token = authorization.split('Bearer ')[1]
     const data = jwt.verify(token, process.env.ACCESS_SECRET)
 
-    const userInfo = await User.findAll({
+    const userInfo = await User.findOne({
       raw: true,
-      nest: true,
-      include: [
-        {
-          model: Social,
-          where: {
-            userId: data.id
-          }
-        }
-      ],
-      where: { id: data.id },
+      where: {
+        id: data.id
+      }
     })
-    
-    delete userInfo.password
-    delete userInfo.createdAt
-    delete userInfo.updatedAt
 
-    console.log(userInfo)
+    const socialInfo = await Social.findAll({
+      raw: true,
+      where: {
+        userId: userInfo.id
+      }
+    })
+
+    if(socialInfo.length > 0) {
+      userInfo.Social = []
+      socialInfo.forEach(obj => {
+        const { createdAt, updatedAt, UserId, userId, ...socialData } = obj
+        userInfo.Social.push(socialData)
+      })
+    }
+
+    else {
+      userInfo.Social = null
+    }
+
+    const { password, createdAt, updatedAt, ...userData } = userInfo
+    console.log(userData)
 
     res.status(201).json({
-      data: userInfo,
+      data: userData,
       message: "ok"
     })
   }

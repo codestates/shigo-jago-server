@@ -11,25 +11,37 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert('Hotels', [
+    await queryInterface.bulkInsert('Payments', [
       {
-        id: '10',
-        hotelname: 'lotte',
+        id: '3',
+        price: '120000',
+        howPaid: 'card',
+        cardNumber: '1111-4444-3666-5455',
+        accountNumber: null,
         createdAt: new Date(),
         updatedAt: new Date(),
+        reservationId: 1
       },
       {
-        id: '11',
-        hotelname: 'samsung',
+        id: '4',
+        price: '240000',
+        howPaid: 'account',
+        cardNumber: null,
+        accountNumber: '356-516545-65412',
         createdAt: new Date(),
         updatedAt: new Date(),
+        reservationId: 2
       },
       {
-        id: '12',
-        hotelname: '발리관광호텔',
+        id: '5',
+        price: '360000',
+        howPaid: 'account',
+        cardNumber: null,
+        accountNumber: '351-028461-77513',
         createdAt: new Date(),
         updatedAt: new Date(),
-      }
+        reservationId: 3
+      },
     ]);
   },
 
@@ -40,6 +52,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete('Hotels', null, {});
+    return queryInterface.bulkDelete('Payments', null, {});
   },
 };

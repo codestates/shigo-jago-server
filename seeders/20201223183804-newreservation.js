@@ -13,7 +13,7 @@ module.exports = {
      */
     await queryInterface.bulkInsert('Reservations', [
       {
-        id: '10',
+        id: '1',
         checkedin: '2020-12-01',
         checkedout: '2020-12-04',
         adult: 2,
@@ -24,7 +24,7 @@ module.exports = {
         hotelId: 10,
       },
       {
-        id: '11',
+        id: '2',
         checkedin: '2020-12-01',
         checkedout: '2020-12-04',
         adult: 3,
@@ -33,6 +33,17 @@ module.exports = {
         updatedAt: new Date(),
         userId: 2,
         hotelId: 11,
+      },
+      {
+        id: '3',
+        checkedin: '2020-12-01',
+        checkedout: '2020-12-04',
+        adult: 3,
+        child: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: 3,
+        hotelId: 12,
       },
     ]);
   },

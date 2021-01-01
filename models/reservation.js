@@ -22,8 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           allowNull: true,
         },
-      }),
-      Reservation.hasOne(models.Payment);
+      })
+      Reservation.hasOne(models.Payment, {
+        foreignKey: 'reservationId',
+        onDelete: 'CASCADE',
+      })
     }
   };
   Reservation.init({

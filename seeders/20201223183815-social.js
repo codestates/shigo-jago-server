@@ -11,25 +11,34 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert('Hotels', [
+    await queryInterface.bulkInsert('Socials', [
       {
         id: '10',
-        hotelname: 'lotte',
+        corporation: 'kakao',
+        socialEmail: 'hoyong@naver.com',
+        socialAccount: '1518565481',
         createdAt: new Date(),
         updatedAt: new Date(),
+        userId: 2
       },
       {
         id: '11',
-        hotelname: 'samsung',
+        corporation: 'google',
+        socialEmail: 'hoyong@gmail.com',
+        socialAccount: '65165465465135135',
         createdAt: new Date(),
         updatedAt: new Date(),
+        userId: 2
       },
       {
         id: '12',
-        hotelname: '발리관광호텔',
+        corporation: 'google',
+        socialEmail: 'ingi@gmail.com',
+        socialAccount: '75233258953528562',
         createdAt: new Date(),
         updatedAt: new Date(),
-      }
+        userId: 3
+      },
     ]);
   },
 
@@ -40,6 +49,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete('Hotels', null, {});
+    return queryInterface.bulkDelete('Socials', null, {});
   },
 };

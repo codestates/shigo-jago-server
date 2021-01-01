@@ -43,8 +43,7 @@ module.exports = async (req, res) => {
     }
 
     const { password, createdAt, updatedAt, ...userData } = userInfo
-    console.log(userData)
-
+    
     res.status(201).json({
       data: userData,
       message: "ok"

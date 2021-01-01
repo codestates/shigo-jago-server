@@ -19,10 +19,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
       })
+      User.hasMany(models.Social, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+      })
     }
   };
   User.init({
-    email: DataTypes.STRING,
+    loginId: DataTypes.STRING,
     name: DataTypes.STRING,
     password: DataTypes.STRING,
     mobile: DataTypes.STRING

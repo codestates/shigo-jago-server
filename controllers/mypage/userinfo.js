@@ -1,6 +1,7 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const { User } = require('../../models')
+const { Social } = require('../../models')
 
 module.exports = async (req, res) => {
 
@@ -15,16 +16,28 @@ module.exports = async (req, res) => {
     const token = authorization.split('Bearer ')[1]
     const data = jwt.verify(token, process.env.ACCESS_SECRET)
 
-    let userInfo = await User.findOne({
+    const userInfo = await User.findAll({
+      raw: true,
+      nest: true,
+      include: [
+        {
+          model: Social,
+          where: {
+            userId: data.id
+          }
+        }
+      ],
       where: { id: data.id },
     })
-    let obj = userInfo.dataValues
-    delete obj.password
-    delete obj.createdAt
-    delete obj.updatedAt
+    
+    delete userInfo.password
+    delete userInfo.createdAt
+    delete userInfo.updatedAt
+
+    console.log(userInfo)
 
     res.status(201).json({
-      data: obj,
+      data: userInfo,
       message: "ok"
     })
   }

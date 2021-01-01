@@ -51,9 +51,6 @@
 
 # 🗣 우리를 소개합니다.
 
-✅ [테이블 형식을 통해 깔끔하게 정리해보세요!](https://www.markdownguide.org/cheat-sheet/)
-
-✅ [마크다운이 익숙치 않다면, html을 사용해보세요](https://www.w3schools.com/tags/tag_table.asp)
 <table>
   <tbody>
     <tr>

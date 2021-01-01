@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
                 hotelname: hotelName
             }
         })
-        console.log(hotelInfo)
+        
         const reservationInfo = await Reservation.create({
             checkedin: checkedin,
             checkedout: checkedout,

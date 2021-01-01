@@ -28,18 +28,14 @@ module.exports = async (req, res) => {
     const data = jwt.verify(token, process.env.ACCESS_SECRET)
 
     const paymentInfo = await Payment.findOne({
-        where: { reservationId: req.body.reservationId },
-      })
-    
-    let obj = paymentInfo.dataValues
-    delete obj.updatedAt
-    delete obj.ReservationId
-
+      raw: true,
+      where: { reservationId: req.body.reservationId },
+    })
+    const { id, updatedAt, ...payInfo } = paymentInfo
 
     res.status(201).json({ 
-    "data":  obj,
-    "message": "ok" 
+      "data":  payInfo,
+      "message": "ok" 
     })
-
   }
 }

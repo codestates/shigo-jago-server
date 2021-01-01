@@ -1,16 +1,17 @@
 const { User } = require("../../models")
-const { Social } = require("../../models");
-
+const { Social } = require("../../models")
+const SHA256 = require('../../lib/SHA256')
+const crypto = require('crypto')
 require("dotenv").config();
 
 module.exports = async (req, res) => {
     const { loginId, name, password, mobile, corporation, socialAccount, socialEmail } = req.body;
-    console.log('signup', req.body)
 
     if(corporation === 'kakao') {
         if (!loginId || !password || !name || !mobile) {
             return res.status(422).send({ "error": "insufficient parameters supplied" })
         }
+        const salt = crypto.randomBytes(8).toString("hex")
         const [userInfo, created] = await User.findOrCreate({
             raw: true,
             where: {
@@ -18,7 +19,8 @@ module.exports = async (req, res) => {
             },
             defaults: {
                 name: name,
-                password: password,
+                password: SHA256(password + salt),
+                salt: salt,
                 mobile: mobile
             }
         })
@@ -40,6 +42,7 @@ module.exports = async (req, res) => {
         if (!loginId || !password || !name || !mobile) {
             return res.status(422).send({ "error": "insufficient parameters supplied" })
         }
+        const salt = crypto.randomBytes(8).toString("hex")
         const [userInfo, created] = await User.findOrCreate({
             raw: true,
             where: {
@@ -47,7 +50,8 @@ module.exports = async (req, res) => {
                 name: name
             },
             defaults: {
-                password: password,
+                password: SHA256(password + salt),
+                salt: salt,
                 mobile: mobile
             }
         })
@@ -69,13 +73,15 @@ module.exports = async (req, res) => {
         if (!loginId || !password || !name || !mobile) {
             return res.status(422).send({ "error": "insufficient parameters supplied" })
         }
+        const salt = crypto.randomBytes(8).toString("hex")
         const [userInfo, created] = await User.findOrCreate({
             where: {
                 loginId: loginId
             },
             defaults: {
                 name: name,
-                password: password,
+                password: SHA256(password + salt),
+                salt: salt,
                 mobile: mobile
             }
         })
@@ -85,7 +91,4 @@ module.exports = async (req, res) => {
             res.status(409).send({ "error": "email exists" })
         }
     }
-
-    
-
 }

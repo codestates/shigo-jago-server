@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+  <head>
+    <title>chat_practice</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { height:99%; font: 1rem Helvetica, Arial; font-weight:50}
+		form { background: #000; padding: 3px; width: 100%; position: relative;}
+		#nickNameForm{
+			
+		}
+		
+		#typeForm{
+			bottom:0;
+		}
+		#whoIsInBox{
+			overflow-y:scroll;
+		}
+      form input { border: 0; padding: 10px; width: 90%; margin-bottom:1%;
+		  margin-right: .5%; font-size:2rem}
+      form button { background: rgb(130, 224, 255);
+		  border: none; padding: 10px; font-size:2rem}
+      #messages { list-style-type: none; margin: 0; padding: 0; height:100%; overflow-y:scroll; position:relative;}
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(even) { background: #eee; }
+		ul{
+			font-size:1.5rem
+		}
+    </style>
+	  <script src="/socket.io/socket.io.js"></script>
+	  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+		<script>
+		  	
+			//when the document is ready.
+  			$(function () {
+				//about DOM
+				$('#m').focus();
+				
+				//socket io
+				var socket = io();
+				var typingNotice=' is typing..';
+				var fontColor='black';
+				var nickName='';
+				var whoIsTyping=[];
+				console.log('1', nickName)
+				
+				$('#typeForm').submit(function(){
+					//submit only if it's not empty
+					if($('#m').val()!=""){
+						socket.emit('say', $('#m').val());
+						//say event means someone transmitted chat
+						$('#m').val('');
+						socket.emit('quitTyping')
+					}
+					return false;
+				});
+				
+				$('#nickNameForm').submit(function(){
+					console.log('초기', nickName)
+					nickName=$('#nickName').val();
+					$('#nickName').attr('placeholder', 'NickName : '+nickName);
+					socket.emit('setNickName', nickName)
+					$('#nickName').val("");	
+					$('#m').focus();
+					return false;
+				})
+				
+				socket.on('selfData', function(obj){
+					console.log('getting initial data from server');
+					nickName=obj.nickName;
+					$('#nickName').attr('placeholder', 'NickName : '+nickName);
+					//set #nickNameForm placeholder
+					
+				});
+				
+				socket.on('setNickName', function(obj){
+					var past=obj.past;
+					var current=obj.current;
+					var whoIsOn=obj.whoIsOn;
+					
+					var msg=`====== ${past} changed nickname to ${current} ======`;
+					$('#messages').append($('<li>').text(msg));
+					
+					editUsers(whoIsOn);
+					
+				})
+				
+				socket.on('chat message', function(msg){
+				  $('#messages').append($('<li>').text(msg));
+				});
+				
+				socket.on('login', function(nickNameArr){
+					var newbie=nickNameArr[nickNameArr.length-1];
+					editUsers(nickNameArr);
+					$('#messages').append($('<li>').text('======'+newbie+"  LOG IN======"));
+				})
+				socket.on('typing', function(nickNameArr){
+					var tempMsg="";
+					whoIsTyping=nickNameArr;
+					for(person in nickNameArr){
+						tempMsg+=nickNameArr[person]+', '
+					}
+					tempMsg=tempMsg.substring(0, tempMsg.length-2);
+					$('#m').attr('placeholder', tempMsg+typingNotice)
+				});
+				
+				socket.on('mySaying', function(msg){
+					
+					$('#messages').append($('<li>').text(msg));
+				});
+			
+				socket.on('endTyping', function(){
+					console.log('endTyping');
+					whoIsTyping=[];
+					$('#m').attr('placeholder', "");
+				})
+				
+				socket.on('logout', function(received){
+					var nickNameArr=received.whoIsOn;
+					var disconnected=received.disconnected;
+					$('#messages').append($('<li>').text(`====== ${disconnected} has disconnected ======`));
+					editUsers(nickNameArr);
+				})
+				
+				function editUsers(nickNameArr){
+					
+					$('#whoIsInBox ul').children().each((index, item)=>{
+						$(item).remove();
+					});
+					for(person in nickNameArr){
+						if(nickNameArr[person] !== ' ') {
+						  $('#whoIsInBox ul').append($('<li>').text(nickNameArr[person]));
+						}
+					}
+				}
+				
+				
+				$('#m').keyup(function(event){
+					
+					if($('#m').val()!="" && !whoIsTyping.includes(nickName)){
+						socket.emit('typing');
+						console.log('emit typing');
+					}
+					
+					else if($('#m').val()=="" && whoIsTyping.includes(nickName)){
+
+						socket.emit('quitTyping');
+						console.log('emit quitTyping');	
+						
+					}
+				});
+				
+				
+		  	});
+</script>
+      
+  </head>
+  <body>
+	  <div style="height:70%">
+		<ul id="messages">
+	  		<li id='chatTitle' style='font-size:4rem; font-weight:bold; color:powderblue'>Socket io CHAT</li>
+	  	</ul>	  
+	  </div>
+    
+	  <div id='whoIsInBox'>
+		  <h1>
+			  접속자 명단
+		  </h1>
+		  <ul id='whoIsIn'>
+			  <li>Test In</li>
+		  </ul>
+		  
+	  </div>
+	  <form action="" id='nickNameForm'>
+		  <input id="nickName" placeholder="Plz input a nickname first!" autocomplete="off" /><button>Send</button>
+	  </form>
+    <form action="" id='typeForm'>
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </body>
+</html>

@@ -6,5 +6,4 @@ module.exports = {
     writereview: require("./writereview"),
     useredit: require("./useredit"),
     writeinquire: require("./writeinquire"),
-    inquireInfo: require("./inquireInfo")
 }

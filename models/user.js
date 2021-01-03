@@ -14,12 +14,16 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Review, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
-      }),
+      })
       User.hasMany(models.Reservation, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
       })
       User.hasMany(models.Social, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+      })
+      User.hasMany(models.Inquire, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
       })
@@ -35,6 +39,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
-  
+
   return User;
 };

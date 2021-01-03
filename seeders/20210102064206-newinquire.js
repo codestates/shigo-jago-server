@@ -5,7 +5,7 @@ const { SourceCode } = require("eslint");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**
-     * Add seed commands here.
+     *  Add seed commands here.
      *
      * Example:
      * await queryInterface.bulkInsert('People', [{

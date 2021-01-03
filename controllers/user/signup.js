@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
             res.status(201).send({ "message": false })
         } 
         else {
-            res.status(202).send({ "error": "email exists" })
+            res.status(409).send({ "error": "email exists" })
         }
     }
 
@@ -66,7 +66,7 @@ module.exports = async (req, res) => {
             res.status(201).send({ "message": false })
         }
         else {
-            res.status(202).send({ "error": "email exists" })
+            res.status(409).send({ "error": "email exists" })
         }
     }
 

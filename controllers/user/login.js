@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../../models")
 const SHA256 = require("../../lib/SHA256");
 const user = require("../../models/user");
+
 require("dotenv").config();
 
 module.exports = async (req, res) => {
@@ -22,16 +23,16 @@ module.exports = async (req, res) => {
   } 
  
   else {
-    const { password, salt, createdAt, updatedAt, mobile, ...userData } = userInfo
+    const { loginId, password, salt, createdAt, updatedAt, mobile, ...userData } = userInfo
     
     const accessToken = jwt.sign(userData, process.env.ACCESS_SECRET,{ expiresIn: '2h' })
     const refreshToken = jwt.sign(userData, process.env.REFRESH_SECRET, { expiresIn: '12h' })
 
-    res.cookie('refreshToken', refreshToken, { httpOnly: true , sameSite: 'none'})
-    res.status(201).json({ 
+    res.cookie('reToken', refreshToken, { httpOnly: true , sameSite: 'none'}).status(201).json({ 
       "data": { 
         "accessToken": accessToken 
       }, 
       "message": "ok" })
+    
     } 
 }

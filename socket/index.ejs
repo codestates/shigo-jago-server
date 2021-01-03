@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>chat_practice</title>
+    <title>Super Chat</title>
     <style>
       * {
     box-sizing: border-box;
@@ -199,9 +199,18 @@ body {
 	  <script src="/socket.io/socket.io.js"></script>
 	  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 		<script>
-		  	
+const messages = document.getElementById('messages');
+
+function scrollToBottom() {
+  const target = document.querySelector('#messages')
+  target.scrollTop += 20
+}
+
+setInterval(scrollToBottom, 100);
+
 			//when the document is ready.
   			$(function () {
+				  
 				//about DOM
 				$('#m').focus();
 				
@@ -211,7 +220,7 @@ body {
 				var fontColor='black';
 				var nickName='';
 				var whoIsTyping=[];
-				console.log('1', nickName)
+				console.log(window)
 				
 				$('#typeForm').submit(function(){
 					//submit only if it's not empty

@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Review.init({
     title: DataTypes.STRING,
+    star: DataTypes.INTEGER,
     description: DataTypes.STRING
   }, {
     sequelize,

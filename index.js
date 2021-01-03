@@ -14,7 +14,7 @@ const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const ejs = require('ejs')
 
-app.use(express.urlencoded({extended : false}))
+
 
 const port = 4000
 let nowNickName="";
@@ -29,6 +29,7 @@ app.use(
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(express.urlencoded({extended : false}))
 app.use(morgan("dev"))
 
 app.use("/search", searchRouter)

@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
         }
 
         const { checkedin, checkedout, adult, child, hotelName } = reserveInfo
-        const { price, howPaid, cardNumber, accountNumber } = payInfo
+        const { price, howPaid, cardNumber, accountNumber, company } = payInfo
 
         const hotelInfo = await Hotel.findOrCreate({
             where: {
@@ -45,6 +45,7 @@ module.exports = async (req, res) => {
             howPaid: howPaid,
             cardNumber: cardNumber,
             accountNumber: accountNumber,
+            company: company,
             ReservationId: reservationInfo.dataValues.id
         })
 

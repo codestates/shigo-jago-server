@@ -2,17 +2,6 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const { Payment } = require('../../models')
 
-// {
-//     "data": {
-//               "price": "price",
-//               "howToPaid": "howToPaid",
-//               "cardNumber": "cardNumber"
-//             },
-            
-//     "message": "ok"
-// }
-
-//401 { "error": "not authorized" }
 module.exports = async (req, res) => {
 
   const authorization = req.headers.authorization

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>chat_practice</title>
+    <title>Super Chat</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { height:99%; font: 1rem Helvetica, Arial; font-weight:50}
@@ -21,18 +21,51 @@
       form button { background: rgb(130, 224, 255);
 		  border: none; padding: 10px; font-size:2rem}
       #messages { list-style-type: none; margin: 0; padding: 0; height:100%; overflow-y:scroll; position:relative;}
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(even) { background: #eee; }
+      #messages li { padding: 5px 10px; max-width: 220px;}
+      
 		ul{
 			font-size:1.5rem
+		}
+		.lili {
+			text-align: right;
+			background:#7b7bfd;
+			border: 2px solid rgb(251, 203, 203);
+			border-radius: 10px;
+			margin-left: auto;
+			transition:transform 0.5s ease-out;
+			transform:scaleX(1); 
+		}
+		.baba {
+			text-align: left;
+			background: rgb(237, 217, 237);
+			border: 2px solid rgb(215, 162, 242);
+			border-radius: 10px;
+			margin-right: auto;
+			transition:transform 0.5s ease-out;
+			transform:scaleX(1); 
+		}
+		.lilili{
+			transform: scaleX(0);
+		}
+		.bababa {
+			transform: scaleX(0);
 		}
     </style>
 	  <script src="/socket.io/socket.io.js"></script>
 	  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 		<script>
-		  	
+const messages = document.getElementById('messages');
+
+function scrollToBottom() {
+  const target = document.querySelector('#messages')
+  target.scrollTop += 20
+}
+
+setInterval(scrollToBottom, 100);
+
 			//when the document is ready.
   			$(function () {
+				  
 				//about DOM
 				$('#m').focus();
 				
@@ -42,7 +75,7 @@
 				var fontColor='black';
 				var nickName='';
 				var whoIsTyping=[];
-				console.log('1', nickName)
+				console.log(window)
 				
 				$('#typeForm').submit(function(){
 					//submit only if it's not empty
@@ -86,7 +119,8 @@
 				})
 				
 				socket.on('chat message', function(msg){
-				  $('#messages').append($('<li>').text(msg));
+				  $('#messages').append($('<li class="bababa">').text(msg));
+					setTimeout(() => document.querySelector('.bababa').className = "baba", 600)
 				});
 				
 				socket.on('login', function(nickNameArr){
@@ -105,8 +139,9 @@
 				});
 				
 				socket.on('mySaying', function(msg){
+					$('#messages').append($('<li class="lilili">').text(msg))
+				    setTimeout(() => document.querySelector('.lilili').className = "lili", 600)
 					
-					$('#messages').append($('<li>').text(msg));
 				});
 			
 				socket.on('endTyping', function(){

@@ -43,7 +43,6 @@ module.exports = async (req, res) => {
             return res.status(422).send({ "error": "insufficient parameters supplied" })
         }
         const salt = crypto.randomBytes(8).toString("hex")
-        console.log('password', password, 'salt', salt, 'final', SHA256(password + salt))
         const [userInfo, created] = await User.findOrCreate({
             raw: true,
             where: {

@@ -18,6 +18,7 @@ module.exports = {
         howPaid: 'card',
         cardNumber: '1111-4444-3666-5455',
         accountNumber: null,
+        company: '삼성카드',
         createdAt: new Date(),
         updatedAt: new Date(),
         reservationId: 1
@@ -27,6 +28,7 @@ module.exports = {
         price: '240000',
         howPaid: 'account',
         cardNumber: null,
+        company: '신한은행',
         accountNumber: '356-516545-65412',
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -37,6 +39,7 @@ module.exports = {
         price: '360000',
         howPaid: 'account',
         cardNumber: null,
+        company: '국민은행',
         accountNumber: '351-028461-77513',
         createdAt: new Date(),
         updatedAt: new Date(),

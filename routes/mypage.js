@@ -10,6 +10,5 @@ router.post("/writereview", mypageController.writereview)
 router.post("/deleteuser", mypageController.deleteuser)
 router.post("/useredit", mypageController.useredit)
 router.post("/writeinquire", mypageController.writeinquire),
-    router.get("/inquireInfo", mypageController.inquireInfo)
 
 module.exports = router

@@ -57,6 +57,9 @@ app.post('/chat', function(req,res){
 	res.render(__dirname+'/socket/index.ejs')
 })
 
+
+app.use(express.static(__dirname+'/images'));
+
 let whoIsTyping = []
 let whoIsOn = []
 
@@ -182,6 +185,8 @@ io.on('connection', function(socket){
   	});
 	
 });
+
+
 
 http.listen(3080, function(){
   console.log('listening on *:3080');

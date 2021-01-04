@@ -38,6 +38,7 @@ app.use("/mypage", mypageRouter)
 app.use("/detail", detailRouter)
 app.use("/social", socialRouter)
 
+
 app.engine('html', ejs.renderFile);
 app.get('/set', function(req, res){
 	res.render(__dirname+'/socket/enter.ejs')
@@ -56,7 +57,7 @@ app.post('/chat', function(req,res){
     console.log('new user : '+nowNickName)
 	res.render(__dirname+'/socket/index.ejs')
 })
-
+app.use(express.static(__dirname+'/socket'));
 let whoIsTyping = []
 let whoIsOn = []
 

@@ -25,6 +25,7 @@ body {
     font-weight: 400;
     font-size: 100%;
     background: #F1F1F1;
+	overflow-y: scroll;
 }
 
 .chatbox__support {
@@ -32,7 +33,7 @@ body {
     height: 620px;
     width: 100%;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-	overflow: auto;
+	/* overflow: auto; */
 }
 
 /* HEADER */
@@ -64,8 +65,7 @@ body {
     color: white;
 }
 	  
-
-		#nickNameForm{
+		#nickNameForm {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
@@ -73,76 +73,81 @@ body {
 		}
 
 		
-		#typeForm{
+		#typeForm {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
 			padding: 10px 10px;
 		}
-		#whoIsInBox{
-			overflow-y:auto;
-			position: fixed;
+		
+		#whoIsInBox {
 			width: 100%;
-		padding-bottom: 17px;
-		color: #fff;
-		font-size: 18px;
-		background: #7b7bfd;
+			padding-bottom: 17px;
+			color: #fff;
+			font-size: 18px;
+			background: #7b7bfd;
+			top: 602px;
+    		position: fixed;
 		}
 
 		#whoIsInBox h1{
 			font-size: 10;
 		}
 
-
-
 		.messages_member {
-			display: flex;
 			flex-flow: row wrap;
 			align-items: flex-start;
 			margin-bottom: 10px;
-
 		}
 
-}
-      #messages { list-style-type: none; margin: 0; padding: 0; height:100%; overflow-y:auto; position:relative;}
-	  #messages li { padding: 5px 10px;  }
-	  #messages .nickchange {background: rgb(159, 161, 243); 
-		   border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-	border-bottom-right-radius: 20px;}
+      #messages { 
+		  list-style-type: none; 
+		  margin: 0; 
+		  padding: 0; 
+		  height:100%; 
+		  position:relative;
+		  overflow: scroll;
+		  height: 530px;
+		  }
+	  #messages li { padding: 5px 10px;  max-width: 220px }
+	  #messages .nickchange {
+	  background: rgb(159, 161, 243); 
+	  border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+	  border-bottom-right-radius: 20px;
+	}
 
-
-	
 	#messages .my_messaging {
-		width: 95%;
+		width: 50%;
 		padding: 15px;
 		color: black;
 		font-size: 18px;
 		background: #1ddced;
-		text-align: right;
 		border-left: 40px; 
 		border-bottom: 10px;
 		border-radius: 10px;
-	    margin-left: 80px;
+	    margin-left: auto;
 		transition:transform 0.5s ease-out;
 		transform:scaleX(1); 
 		list-style: none;
+		margin-bottom: 14px;
+		text-align: right;
 	  }
 
 	 #messages .general_messaging {
-		width: 95%;
+		width: 50%;
 		padding: 15px;
-		margin-right: 80px;
+		margin-right: auto;
 		border-radius: 10px;
 		color: black;
 		font-size: 18px;
 		background: #1adda4;
-		text-align: left;
 		border-right: 40px; 
 		border-bottom: 10px;
 		transition:transform 0.5s ease-out;
 		transform:scaleX(1); 
 		list-style: none;
+		margin-bottom: 14px
 	  }
 
 	  #messages .my_messaging_trans {
@@ -152,24 +157,66 @@ body {
 			transform: scaleX(0);
 		}
 	  
-
 		ul{
 			font-size:1.5rem
 		}
 
 		.chatbox__footer {
 			width: 100%;
-	position: fixed;
-	bottom: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 20px;
-    background: var(--secondaryGradient);
-    box-shadow: var(--secondaryBoxShadow);
-    margin-top: 20px;
-}		
+			bottom: 0px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-between;
+			padding: 20px 20px;
+			background: var(--secondaryGradient);
+			box-shadow: var(--secondaryBoxShadow);
+			position: fixed;
+        }
+
+		.login {
+			width: 50%;
+			padding: 15px;
+			color: black;
+			font-size: 18px;
+			background: #E6ABFF;
+			border-left: 40px;
+			border-bottom: 10px;
+			border-radius: 10px;
+			margin: auto;
+			transition: transform 0.5s ease-out;
+			transform: scaleX(1);
+			list-style: none;
+			margin-bottom: 14px;
+			text-align: center;
+			margin-top: 10px;
+		}	
+
+		.logout {
+			width: 50%;
+			padding: 15px;
+			color: black;
+			font-size: 18px;
+			background: #7B7BFD;
+			border-left: 40px;
+			border-bottom: 10px;
+			border-radius: 10px;
+			margin: auto;
+			transition: transform 0.5s ease-out;
+			transform: scaleX(1);
+			list-style: none;
+			margin-bottom: 14px;
+			text-align: center;
+			margin-top: 10px;
+		}	
+
+		.loginbe {
+			transform: scaleX(0);
+		}
+
+		.logoutbe {
+			transform: scaleX(0);
+		}
 
 
 
@@ -201,13 +248,12 @@ body {
 		<script>
 const messages = document.getElementById('messages');
 
-function scrollToBottom() {
-  const target = document.querySelector('#messages')
-  target.scrollTop += 20
+function scrollToBottom () {
+	const messages = document.getElementById('messages');
+	messages.scrollTop += 100
 }
 
-setInterval(scrollToBottom, 100);
-
+setInterval(scrollToBottom, 500)
 			//when the document is ready.
   			$(function () {
 				  
@@ -265,13 +311,22 @@ setInterval(scrollToBottom, 100);
 				
 				socket.on('chat message', function(msg){
 				  $('#messages').append($('<li class="general_messaging_trans">').text(msg));
+					const messages = document.getElementById('messages');
+					if(messages.children.length > 5) {
+						messages.scrollTop += 100
+					}
 					setTimeout(() => document.querySelector('.general_messaging_trans').className = "general_messaging", 600)
 				});
 				
 				socket.on('login', function(nickNameArr){
 					var newbie=nickNameArr[nickNameArr.length-1];
 					editUsers(nickNameArr);
-					$('#messages').append($('<li>').text('=='+newbie+"님이 로그인함.=="));
+					$('#messages').append($('<li class=loginbe>').text(' '+newbie+" 님이 입장하셨습니다"));
+					const messages = document.getElementById('messages');
+					if(messages.children.length > 5) {
+						messages.scrollTop += 100
+					}
+					setTimeout(() => document.querySelector('.loginbe').className = "login", 600)
 				})
 				socket.on('typing', function(nickNameArr){
 					var tempMsg="";
@@ -284,7 +339,11 @@ setInterval(scrollToBottom, 100);
 				});
 				
 				socket.on('mySaying', function(msg){
-					$('#messages').append($('<li class="my_messaging_trans">').text(msg));
+					$('#messages').append($('<li class="my_messaging_trans">').text(msg))
+					const messages = document.getElementById('messages');
+					if(messages.children.length > 5) {
+						messages.scrollTop += 100
+					}
 					setTimeout(() => document.querySelector('.my_messaging_trans').className = "my_messaging", 600)
 				});
 
@@ -298,7 +357,12 @@ setInterval(scrollToBottom, 100);
 				socket.on('logout', function(received){
 					var nickNameArr=received.whoIsOn;
 					var disconnected=received.disconnected;
-					$('#messages').append($('<li>').text(`== ${disconnected} has disconnected ==`));
+					$('#messages').append($('<li class="logoutbe">').text(` ${disconnected} 님이 퇴장하셨습니다`));
+					const messages = document.getElementById('messages');
+					if(messages.children.length > 5) {
+						messages.scrollTop += 100
+					}
+					setTimeout(() => document.querySelector('.logoutbe').className = "logout", 600)
 					editUsers(nickNameArr);
 				})
 				
@@ -309,7 +373,7 @@ setInterval(scrollToBottom, 100);
 					});
 					for(person in nickNameArr){
 						if(nickNameArr[person] !== ' ') {
-						  $('#whoIsInBox ul').append($('<li>').text(nickNameArr[person]));
+						  $('#whoIsInBox ul').append($('<span>').text(`유저 : ${nickNameArr[person]} `));
 						}
 					}
 				}
@@ -355,31 +419,34 @@ setInterval(scrollToBottom, 100);
 
 	  		
 		  </ul>	
+		  <div id='whoIsInBox'>
+			<h2>Join Member</h2>
+			<ul id='whoIsIn'>
+				<li>Test In</li>
+			</ul>
+		  <div class="chatbox__footer">
+			<form action="" id='nickNameForm' >
+				<input class=footer_chatNick style="width:300px;" id="nickName" placeholder="Plz input a nickname first!" autocomplete="off" />
+				<div class="chatbox__button">
+					<button >Send</button>
+				</div>
+			</form>
+			<form action="" id='typeForm'>
+				<input class=footer_chatcontent style="width:300px;" id="m" autocomplete="off" />
+				<div class="chatbox__button">
+				 <button >Send</button>
+				</div>
+			</form>
+		  </div>
+		
+			
+		</div>
+
 		</div>  
 	
 	  </div>
     
-	  <div id='whoIsInBox'>
-		  <h2>Join Member</h2>
-		  <ul id='whoIsIn'>
-			  <li>Test In</li>
-		  </ul>
-		  
-	  </div>
-	  <div class="chatbox__footer">
-		<form action="" id='nickNameForm' >
-			<input class=footer_chatNick style="width:300px;" id="nickName" placeholder="Plz input a nickname first!" autocomplete="off" />
-			<div class="chatbox__button">
-				<button >Send</button>
-			</div>
-		</form>
-	    <form action="" id='typeForm'>
-		    <input class=footer_chatcontent style="width:300px;" id="m" autocomplete="off" />
-		    <div class="chatbox__button">
-		     <button >Send</button>
-	        </div>
-	    </form>
-	  </div>
+
 	</div>
   </body>
 </html>

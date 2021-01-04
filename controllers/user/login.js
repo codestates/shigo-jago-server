@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../../models")
 const SHA256 = require("../../lib/SHA256");
-const user = require("../../models/user");
 require("dotenv").config();
 
 module.exports = async (req, res) => {

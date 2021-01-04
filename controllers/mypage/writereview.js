@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
         })
     }
     else {
-        const { title, description, reservationId } = req.body
+        const { title, description, reservationId, star } = req.body
 
         if (!title || !description) {
             return res.status(422).send({ "error": 'insufficient parameters supplied' });
@@ -31,7 +31,8 @@ module.exports = async (req, res) => {
                 title: title,
                 description: description,
                 userId: userId,
-                hotelId: hotelId
+                hotelId: hotelId,
+                star: star
             }
         })
         if (created) {
@@ -42,7 +43,8 @@ module.exports = async (req, res) => {
             const editReviewInfo = await Review.update(
                 {
                     title: title,
-                    description: description
+                    description: description,
+                    star: star
                 },
                 {
                     where: { id: reviewInfo.id }

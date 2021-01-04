@@ -14,12 +14,13 @@ module.exports = async (req, res) => {
   }
   else {
     const token = authorization.split('Bearer ')[1]
-    const data = jwt.verify(token, process.env.ACCESS_SECRET)
+    const data = jwt.verify(token, process.env.ACCESS_SECRET, async function(err, decoded) {
+      if (err) res.status(401).end()
 
     const userInfo = await User.findOne({
       raw: true,
       where: {
-        id: data.id
+        id: decoded.id
       }
     })
 
@@ -48,5 +49,8 @@ module.exports = async (req, res) => {
       data: userData,
       message: "ok"
     })
+    }) 
+    
+
   }
 }

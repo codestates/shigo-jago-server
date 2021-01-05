@@ -1,6 +1,6 @@
 ---
 name: 'First Project - '
-about: Describe this issue template's purpose here.
+about: 'First Project - '
 title: ''
 labels: ''
 assignees: ''

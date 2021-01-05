@@ -1,7 +1,7 @@
 ---
 name: 'First Project - '
 about: 'First Project - '
-title: ''
+title: 'First Project - '
 labels: ''
 assignees: ''
 

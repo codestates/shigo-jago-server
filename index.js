@@ -21,7 +21,7 @@ let nowNickName="";
 
 app.use(
     cors({
-        origin: ["http://localhost:3000", "http://shigojago.s3-website.ap-northeast-2.amazonaws.com"],
+        origin: ["http://localhost:3000", "http://shigojago.icu"],
         method: ["GET, POST, OPTION"],
         credentials: true,
     })

@@ -20,10 +20,21 @@ let nowNickName="";
 app.use(helmet({
   frameguard: false
 }))
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'", "'unsafe-inline'",  `${process.env.BASE_URL}`],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://code.jquery.com/", "https://ajax.aspnetcdn.com/", `${process.env.BASE_URL}`, ],
+      imgSrc: ["'self'", "'unsafe-inline'", "https://cdn.channel.io/plugin/images/", 'data:'],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+  }),
+)
 
 app.use(
     cors({
-        origin: ["http://shigojago.icu"],
+        origin: ["http://localhost:3000", "http://shigojago.icu"],
         method: ["GET, POST, OPTION"],
         credentials: true,
     })

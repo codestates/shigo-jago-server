@@ -2,9 +2,11 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 const cookieParser = require('cookie-parser')
-
-
+const helmet = require('helmet')
 const ejs = require('ejs')
+
+const app = express()
+
 const searchRouter = require("./routes/search")
 const userRouter = require("./routes/user")
 const mypageRouter = require("./routes/mypage")
@@ -12,13 +14,10 @@ const detailRouter = require("./routes/detail")
 const socialRouter = require("./routes/social")
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
-const helmet = require('helmet')
-const app = express()
-
-app.use(helmet())
-
 const port = 4000
 let nowNickName="";
+
+app.use(helmet())
 
 app.use(
     cors({

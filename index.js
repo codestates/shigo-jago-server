@@ -13,7 +13,7 @@ const mypageRouter = require("./routes/mypage")
 const detailRouter = require("./routes/detail")
 const socialRouter = require("./routes/social")
 const http = require('http').createServer(app)
-const io = require('socket.io')
+const io = require('socket.io')(http)
 const port = 4000
 let nowNickName="";
 

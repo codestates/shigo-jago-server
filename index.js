@@ -1,27 +1,28 @@
 const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
+const cookieParser = require('cookie-parser')
 
+
+const ejs = require('ejs')
 const searchRouter = require("./routes/search")
 const userRouter = require("./routes/user")
 const mypageRouter = require("./routes/mypage")
 const detailRouter = require("./routes/detail")
 const socialRouter = require("./routes/social")
-const cookieParser = require('cookie-parser');
-
-const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
-const ejs = require('ejs')
+const helmet = require('helmet')
+const app = express()
 
-
+app.use(helmet())
 
 const port = 4000
 let nowNickName="";
 
 app.use(
     cors({
-        origin: ["http://localhost:3000", "http://shigojago.icu"],
+        origin: ["http://shigojago.icu"],
         method: ["GET, POST, OPTION"],
         credentials: true,
     })
@@ -39,7 +40,7 @@ app.use("/detail", detailRouter)
 app.use("/social", socialRouter)
 
 
-app.engine('html', ejs.renderFile);
+app.engine('html', ejs.renderFile)
 app.get('/set', function(req, res){
 	res.render(__dirname+'/socket/enter.ejs')
   
@@ -62,7 +63,7 @@ let whoIsTyping = []
 let whoIsOn = []
 
 io.on('connection', function(socket){
-	
+  console.log('connection :', socket.request.connection._peername)
 	var nickName= nowNickName || ' '
     
     whoIsOn.push(nickName)
@@ -103,9 +104,9 @@ io.on('connection', function(socket){
 		//mySaying to the speaker
 		socket.broadcast.emit('chat message', nickName+'  :  '+msg);
 		socket.emit('mySaying', 'ME  :  '+msg);	
-  	});
-	
-	
+  });
+
+
 	socket.on('typing', function(){
 		if(!whoIsTyping.includes(nickName)){
 			whoIsTyping.push(nickName);

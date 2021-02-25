@@ -13,7 +13,7 @@ const mypageRouter = require("./routes/mypage")
 const detailRouter = require("./routes/detail")
 const socialRouter = require("./routes/social")
 const http = require('http').createServer(app)
-const io = require('socket.io')(http)
+const io = require('socket.io')
 const port = 4000
 let nowNickName="";
 
@@ -120,17 +120,14 @@ io.on('connection', function(socket){
 
 	socket.on('typing', function(){
 		if(!whoIsTyping.includes(nickName)){
-			whoIsTyping.push(nickName);
-			console.log('who is typing now');
-			console.log(whoIsTyping);
-			io.emit('typing', whoIsTyping);	
+			whoIsTyping.push(nickName)
+			io.emit('typing', whoIsTyping)
 		}
-	});
+	})
 	
 	socket.on('quitTyping', function(){
 		if(whoIsTyping.length==0){
 			//if it's empty
-			console.log('emit endTyping');
 			io.emit('endTyping');
 		}
 		else{
@@ -140,21 +137,15 @@ io.on('connection', function(socket){
 			if(index!=-1){
 				whoIsTyping.splice(index, 1);
 				if(whoIsTyping.length==0){
-					
-					console.log('emit endTyping');
 					io.emit('endTyping');
 				}
-				
 				else{
 					io.emit('typing', whoIsTyping);
 					console.log('emit quitTyping');
 					console.log('whoIsTyping after quit');
 					console.log(whoIsTyping);
-				}
-				
+				}	
 			}
-			
-			
 		}
 	});
 	

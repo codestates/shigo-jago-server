@@ -244,7 +244,7 @@ body {
 }
     </style>
 	  <script src="/socket.io/socket.io.js"></script>
-	  <script src="./jquery-1.11.1.js.js"></script>
+	  <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
 		<script>
 const messages = document.getElementById('messages');
 
@@ -280,7 +280,6 @@ setInterval(scrollToBottom, 500)
 				});
 				
 				$('#nickNameForm').submit(function(){
-					console.log('초기', nickName)
 					nickName=$('#nickName').val();
 					$('#nickName').attr('placeholder', 'NickName : '+nickName);
 					socket.emit('setNickName', nickName)
@@ -290,7 +289,6 @@ setInterval(scrollToBottom, 500)
 				})
 				
 				socket.on('selfData', function(obj){
-					console.log('getting initial data from server');
 					nickName=obj.nickName;
 					$('#nickName').attr('placeholder', 'NickName : '+nickName);
 					//set #nickNameForm placeholder
@@ -383,20 +381,17 @@ setInterval(scrollToBottom, 500)
 					
 					if($('#m').val()!="" && !whoIsTyping.includes(nickName)){
 						socket.emit('typing');
-						console.log('emit typing');
 					}
 					
 					else if($('#m').val()=="" && whoIsTyping.includes(nickName)){
-
 						socket.emit('quitTyping');
-						console.log('emit quitTyping');	
-						
 					}
 				});
 				
 				
 		  	});
 </script>
+<script type="text/javascript" src="./jquery-1.11.1.js.js"></script>
       
   </head>
   <body>

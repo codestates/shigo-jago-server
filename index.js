@@ -17,7 +17,9 @@ const io = require('socket.io')(http)
 const port = 4000
 let nowNickName="";
 
-app.use(helmet())
+app.use(helmet({
+  frameguard: false
+}))
 
 app.use(
     cors({

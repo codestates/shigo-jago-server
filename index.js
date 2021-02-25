@@ -18,23 +18,22 @@ const port = 4000
 let nowNickName="";
 
 app.use(helmet({
-  frameguard: false
+  frameguard: false,
 }))
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'", "'unsafe-inline'",  `${process.env.BASE_URL}`],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://code.jquery.com/", "https://ajax.aspnetcdn.com/", `${process.env.BASE_URL}`, ],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://code.jquery.com/", "https://ajax.aspnetcdn.com/", `${process.env.BASE_URL}`],
       imgSrc: ["'self'", "'unsafe-inline'", "https://cdn.channel.io/plugin/images/", 'data:'],
-      objectSrc: ["'none'"],
-      upgradeInsecureRequests: [],
-    },
-  }),
+      objectSrc: ["'none'"]
+    }
+  })
 )
 
 app.use(
     cors({
-        origin: ["http://localhost:3000", "http://shigojago.icu"],
+        origin: [`${process.env.BASE_URL}`],
         method: ["GET, POST, OPTION"],
         credentials: true,
     })

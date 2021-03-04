@@ -5,7 +5,6 @@
 ***Shigo_Jago***에서는 복잡하고 어렵기만 했던 온라인 호텔 예약을 쉽고 간단하게 만들어 드립니다. 클릭 한번으로 다양한 호텔, 숙박 상품을 확인하실 수 있습니다.
 ***Shigo_Jago*** 를 찾아주세요~
 
-* 배포 사이트 : <a href="http://shigojago.icu/">http://shigojago.icu/</a>
 * 클라이언트 : <a href="https://github.com/codestates/shigo-jago-client">https://github.com/codestates/shigo-jago-client</a>
 * 서버 : <a href="https://github.com/codestates/shigo-jago-server">https://github.com/codestates/shigo-jago-server</a>
  <br>
